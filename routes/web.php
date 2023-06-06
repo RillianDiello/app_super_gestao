@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TestController;
@@ -21,9 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MainController::class, 'principal'])
   ->name('site.index');
 
-Route::get('/login', function () {
-    return 'Login';
-})->name('site.login');
+Route::get('/login/{error?}', [LoginController::class, 'index'])->name('site.login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('site.login');
 
 Route::get('/contact', [ContactController::class, 'contact'])->name('site.contact');
 Route::post('/contact', [ContactController::class, 'save'])->name('site.contact');
@@ -44,5 +44,7 @@ Route::get('/test/{p1}/{p2}', [TestController::class, 'teste'])->name('site.rout
 
 
 Route::fallback(function () {
-    return 'The route accessed does not exist. <a href="' . route('site.index') . '">Click here</a> to redirect for main page ';
+    return 'The route accessed does not exist. <a href="' . route(
+        'site.index'
+      ) . '">Click here</a> to redirect for main page ';
 });
