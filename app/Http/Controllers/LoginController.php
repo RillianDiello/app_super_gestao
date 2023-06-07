@@ -20,6 +20,13 @@ class LoginController extends Controller
         return view('site.login', ['title' => 'Login', 'error' => $error]);
     }
 
+    //
+    public function out()
+    {
+        session_destroy();
+        return redirect()->route('site.index');
+    }
+
     public function authenticate(Request $request)
     {
         // validation rules
@@ -47,7 +54,7 @@ class LoginController extends Controller
             $_SESSION['name'] = $user->name;
             $_SESSION['email'] = $user->email;
 //            dd($_SESSION);
-            return redirect()->route('app.clients');
+            return redirect()->route('app.home');
         } else {
 //            echo 'Usuario não encontrando';
             return redirect()->route('site.login', ['error' => 1]);
