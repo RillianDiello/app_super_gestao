@@ -34,6 +34,4 @@
         <br />
     @endforeach
 </div>
-@else
-    <div>Não há erros</div>
 @endif
