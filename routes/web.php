@@ -28,8 +28,10 @@ Route::get('/', [MainController::class, 'principal'])
 Route::get('/login/{error?}', [LoginController::class, 'index'])->name('site.login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('site.login');
 
-Route::get('/contact', [ContactController::class, 'contact'])->name('site.contact');
-Route::post('/contact', [ContactController::class, 'save'])->name('site.contact');
+Route::get('/contact', [ContactController::class, 'contact'])
+  ->name('site.contact');
+Route::post('/contact', [ContactController::class, 'save'])
+  ->name('site.contact');
 
 Route::get('/about', [AboutController::class, 'about'])->name('site.about');
 
