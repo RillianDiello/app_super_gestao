@@ -40,6 +40,8 @@ Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(functi
     Route::get('/home', [HomeController::class, 'index'])->name('app.home');
     Route::get('/client', [ClientController::class, 'index'])->name('app.client');
     Route::get('/supplier', [SupplierController::class, 'index'])->name('app.supplier');
+    Route::get('/supplier/list', [SupplierController::class, 'list'])->name('app.supplier.list');
+    Route::get('/supplier/add', [SupplierController::class, 'add'])->name('app.supplier.add');
     Route::get('/product', [ProductController::class, 'index'])->name('app.product');
 });
 
