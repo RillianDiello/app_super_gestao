@@ -39,9 +39,14 @@ Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(functi
     Route::get('/out', [LoginController::class, 'out'])->name('app.out');
     Route::get('/home', [HomeController::class, 'index'])->name('app.home');
     Route::get('/client', [ClientController::class, 'index'])->name('app.client');
+
     Route::get('/supplier', [SupplierController::class, 'index'])->name('app.supplier');
+    Route::post('/supplier/list', [SupplierController::class, 'list'])->name('app.supplier.list');
     Route::get('/supplier/list', [SupplierController::class, 'list'])->name('app.supplier.list');
     Route::get('/supplier/add', [SupplierController::class, 'add'])->name('app.supplier.add');
+    Route::post('/supplier/add', [SupplierController::class, 'add'])->name('app.supplier.add');
+    Route::get('/supplier/edit/{id}/{msg?}', [SupplierController::class, 'edit'])->name('app.supplier.edit');
+
     Route::get('/product', [ProductController::class, 'index'])->name('app.product');
 });
 

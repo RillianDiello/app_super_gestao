@@ -12,15 +12,26 @@ class SupplierController extends Controller
         return view('app.supplier.index');
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        return view('app.supplier.list');
+//        dd($request->all());
+
+        $suppliers = Supplier::
+            where('name', 'like', '%' . $request->input('name') . '%')
+          ->where('website', 'like', '%' . $request->input('website') . '%')
+          ->where('phone', 'like', '%' . $request->input('phone') . '%')
+          ->where('uf', 'like', '%' . $request->input('uf') . '%')
+          ->where('email', 'like', '%' . $request->input('email') . '%')
+          ->paginate(3);
+//        ->get();
+//        dd($suppliers);
+        return view('app.supplier.list', ['suppliers' => $suppliers]);
     }
 
     public function add(Request $request)
     {
         $msg = '';
-        if ($request->input('_token') != '') {
+        if ($request->input('_token') != '' && $request->input('id') == '') {
             $rules = [
               'name' => 'required|min:3|max:40',
               'website' => 'required',
@@ -45,7 +56,24 @@ class SupplierController extends Controller
 
             $msg = 'Supplier created with successfully';
         }
+        if ($request->input('_token') != '' && $request->input('id') != '') {
+            $supplier = Supplier::find($request->input('id'));
+            $update = $supplier->update($request->all());
+            if($update){
+                $msg =  'Update Supplier Successful';
+            }else {
+                $msg = 'Error on update';
+            }
+            return  redirect()->route('app.supplier.edit', ['id' => $request->input('id'), 'msg' => $msg,]);
+        }
+
 
         return view('app.supplier.add', ['msg' => $msg]);
+    }
+
+    public function edit(int $id, $msg = '')
+    {
+        $supplier = Supplier::find($id);
+        return view('app.supplier.add', ['supplier' => $supplier, 'msg' => $msg]);
     }
 }
