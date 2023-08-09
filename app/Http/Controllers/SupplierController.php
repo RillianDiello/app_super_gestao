@@ -22,10 +22,10 @@ class SupplierController extends Controller
           ->where('phone', 'like', '%' . $request->input('phone') . '%')
           ->where('uf', 'like', '%' . $request->input('uf') . '%')
           ->where('email', 'like', '%' . $request->input('email') . '%')
-          ->paginate(3);
+          ->paginate(2);
 //        ->get();
 //        dd($suppliers);
-        return view('app.supplier.list', ['suppliers' => $suppliers]);
+        return view('app.supplier.list', ['suppliers' => $suppliers, 'request' => $request->all()]);
     }
 
     public function add(Request $request)
@@ -75,5 +75,11 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::find($id);
         return view('app.supplier.add', ['supplier' => $supplier, 'msg' => $msg]);
+    }
+
+    public function delete(int $id, $msg = ''){
+        Supplier::find($id)->delete();
+
+        return redirect()->route('app.supplier');
     }
 }

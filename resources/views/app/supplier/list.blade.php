@@ -36,14 +36,21 @@
               <td>{{$supplier->uf}}</td>
               <td>{{$supplier->email}}</td>
               <td>{{$supplier->phone}}</td>
-              <td>Remove</td>
+              <td><a href="{{ route('app.supplier.remove', $supplier->id) }}">Remove</a></td>
               <td><a href="{{ route('app.supplier.edit', $supplier->id) }}">Edit</a></td>
 
             </tr>
           @endforeach
           </tbody>
         </table>
-        {{$suppliers->links()}}
+        <div style="width: 5%; height: 5%; margin-left: auto; margin-right: auto">
+          {{$suppliers->appends($request)->links()}}
+        </div>
+        <br>
+        {{ $suppliers->count() }} - Total Registers per page
+        <br>
+
+        {{$suppliers->total()}} - Total Register
       </div>
     </div>
   </div>
