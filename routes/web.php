@@ -46,8 +46,9 @@ Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(functi
     Route::get('/supplier/add', [SupplierController::class, 'add'])->name('app.supplier.add');
     Route::post('/supplier/add', [SupplierController::class, 'add'])->name('app.supplier.add');
     Route::get('/supplier/edit/{id}/{msg?}', [SupplierController::class, 'edit'])->name('app.supplier.edit');
+    Route::get('/supplier/remove/{id}/{msg?}', [SupplierController::class, 'delete'])->name('app.supplier.remove');
 
-    Route::get('/product', [ProductController::class, 'index'])->name('app.product');
+    Route::resource('/product', ProductController::class);
 });
 
 Route::get('/test/{p1}/{p2}', [TestController::class, 'teste'])->name('site.route1');
