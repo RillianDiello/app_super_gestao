@@ -23,8 +23,7 @@ class SupplierController extends Controller
           ->where('uf', 'like', '%' . $request->input('uf') . '%')
           ->where('email', 'like', '%' . $request->input('email') . '%')
           ->paginate(2);
-//        ->get();
-//        dd($suppliers);
+
         return view('app.supplier.list', ['suppliers' => $suppliers, 'request' => $request->all()]);
     }
 

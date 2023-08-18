@@ -18,8 +18,7 @@ class ProductController extends Controller
     {
         $products = Product::paginate(10);
 
-        return view ('app.product.index', ['products' => $products, 'request' => $request->all()]);
-
+        return view('app.product.index', ['products' => $products, 'request' => $request->all()]);
     }
 
     /**
@@ -36,56 +35,80 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
+        $rules = [
+          'name' => 'required|min:3|max:40',
+          'description' => 'required|min:3|max:2000',
+          'weight' => 'required|integer',
+          'unit_id' => 'exists:units,id'
+        ];
+        $feedback = [
+          'required' => 'Field :attribute is obligated',
+          'name.min' => 'Min size is 3 chars',
+          'name.max' => 'Max size is 40 chars',
+          'description.min' => 'Max size is 3 chars',
+          'description.max' => 'Max size is 2000 chars',
+          'weight.integer' => 'Weight must be a integer',
+          'unit_id.exists' => 'The unit of measure does not exist',
+        ];
+
+        $request->validate($rules, $feedback);
+        Product::create($request->all());
+        return redirect()->route('product.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Productt  $productt
+     * @param \App\Models\Product $productt
      * @return \Illuminate\Http\Response
      */
-    public function show(Productt $productt)
+    public function show(Product $product)
     {
-        //
+        return view('app.product.show', ['product' => $product]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Productt  $productt
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Productt $productt)
+    public function edit(Product $product)
     {
-        //
+        $units = Unit::all();
+        return view('app.product.edit', ['product' => $product, 'units' => $units]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Productt  $productt
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Productt $productt)
+    public function update(Request $request, Product $product)
     {
         //
+
+       $product->update($request->all());
+       return redirect()->route('product.show', ['product' => $product->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Productt  $productt
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Productt $productt)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('product.index');
     }
 }
