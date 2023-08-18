@@ -25,6 +25,7 @@
             <th>Unit</th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -34,8 +35,16 @@
               <td>{{$product->description}}</td>
               <td>{{$product->weight}}</td>
               <td>{{$product->unit_id}}</td>
-              <td><a href="">Remove</a></td>
-              <td><a href="">Edit</a></td>
+              <td><a href={{route('product.show', ['product' => $product->id])}}>View</a></td>
+              <td><a href={{route('product.edit', ['product' => $product->id])}}>Edit</a></td>
+              <td>
+                <form id="form_{{ $product->id }}" method="post"
+                      action="{{ route('product.destroy', ['product' => $product->id]) }}">
+                  @method('DELETE')
+                  @csrf
+                  <a href="#" onclick="document.getElementById('form_{{ $product->id }}').submit()">Excluir</a>
+                </form>
+              </td>
 
             </tr>
           @endforeach
