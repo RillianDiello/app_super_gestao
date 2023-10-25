@@ -109,4 +109,9 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('product.index');
     }
+
+    public function test(){
+        $myProduct = Product::find(2);
+        return response()->json($myProduct->productDetail->length);
+    }
 }

@@ -1,22 +1,23 @@
 @extends('app.layouts.basic')
 
-@section('title', 'Product Edit')
+@section('title', 'Product Details Add')
 
 @section('content')
   <div class="conteudo-pagina">
     <div class="titulo-pagina-2">
-      <p>Edit Product</p>
+      <p>Add Product Details</p>
     </div>
     <div class="menu">
       <ul>
-        <li><a href="{{route('product.index')}}">Back</a></li>
+        <li><a href="#">Back</a></li>
         <li><a href="">Find</a></li>
       </ul>
     </div>
 
     <div class="informacao-pagina">
+      {{$msg ?? ''}}
       <div style="width: 30%; margin-left: auto; margin-right: auto">
-        @component('app.product._components.form_product', ['product' => $product, 'units' => $units])
+        @component('app.product-detail._components.form_product_details', ['units' => $units])
         @endcomponent
       </div>
     </div>

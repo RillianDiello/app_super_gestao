@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +49,11 @@ Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(functi
     Route::get('/supplier/edit/{id}/{msg?}', [SupplierController::class, 'edit'])->name('app.supplier.edit');
     Route::get('/supplier/remove/{id}/{msg?}', [SupplierController::class, 'delete'])->name('app.supplier.remove');
 
+    // Products resource
     Route::resource('/product', ProductController::class);
+
+    // Product Details resource
+    Route::resource('/product-details', ProductDetailController::class);
 });
 
 Route::get('/test/{p1}/{p2}', [TestController::class, 'teste'])->name('site.route1');
