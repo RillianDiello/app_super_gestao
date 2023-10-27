@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Productt;
+use App\Models\Supplier;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,8 @@ class ProductController extends Controller
     public function create()
     {
         $units = Unit::all();
-        return view('app.product.create', ['units' => $units]);
+        $suppliers = Supplier::all();
+        return view('app.product.create', ['units' => $units, 'suppliers' => $suppliers]);
     }
 
     /**
@@ -40,12 +42,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request->all());
         $rules = [
           'name' => 'required|min:3|max:40',
           'description' => 'required|min:3|max:2000',
           'weight' => 'required|integer',
-          'unit_id' => 'exists:units,id'
+          'unit_id' => 'exists:units,id',
+          'supplier_id' => 'exists:suppliers,id'
         ];
         $feedback = [
           'required' => 'Field :attribute is obligated',
@@ -55,8 +58,9 @@ class ProductController extends Controller
           'description.max' => 'Max size is 2000 chars',
           'weight.integer' => 'Weight must be a integer',
           'unit_id.exists' => 'The unit of measure does not exist',
+          'supplier_id.exists' => 'The supplier of measure does not exist',
         ];
-
+//        dd($request->all());
         $request->validate($rules, $feedback);
         Product::create($request->all());
         return redirect()->route('product.index');
@@ -82,7 +86,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $units = Unit::all();
-        return view('app.product.edit', ['product' => $product, 'units' => $units]);
+        $suppliers = Supplier::all();
+        return view('app.product.edit', ['product' => $product, 'units' => $units, 'suppliers' => $suppliers]);
     }
 
     /**
@@ -94,7 +99,29 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-       $product->update($request->all());
+
+        //
+        $rules = [
+          'name' => 'required|min:3|max:40',
+          'description' => 'required|min:3|max:2000',
+          'weight' => 'required|integer',
+          'unit_id' => 'exists:units,id',
+          'supplier_id' => 'exists:suppliers,id'
+        ];
+        $feedback = [
+          'required' => 'Field :attribute is obligated',
+          'name.min' => 'Min size is 3 chars',
+          'name.max' => 'Max size is 40 chars',
+          'description.min' => 'Max size is 3 chars',
+          'description.max' => 'Max size is 2000 chars',
+          'weight.integer' => 'Weight must be a integer',
+          'unit_id.exists' => 'The unit of measure does not exist',
+          'supplier_id.exists' => 'The supplier of measure does not exist',
+        ];
+
+        $request->validate($rules, $feedback);
+
+        $product->update($request->all());
        return redirect()->route('product.show', ['product' => $product->id]);
     }
 

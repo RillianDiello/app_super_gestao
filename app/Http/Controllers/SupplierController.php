@@ -16,13 +16,13 @@ class SupplierController extends Controller
     {
 //        dd($request->all());
 
-        $suppliers = Supplier::
-            where('name', 'like', '%' . $request->input('name') . '%')
+        $suppliers = Supplier::with(['products'])
+          ->where('name', 'like', '%' . $request->input('name') . '%')
           ->where('website', 'like', '%' . $request->input('website') . '%')
           ->where('phone', 'like', '%' . $request->input('phone') . '%')
           ->where('uf', 'like', '%' . $request->input('uf') . '%')
           ->where('email', 'like', '%' . $request->input('email') . '%')
-          ->paginate(2);
+          ->paginate(5);
 
         return view('app.supplier.list', ['suppliers' => $suppliers, 'request' => $request->all()]);
     }

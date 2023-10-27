@@ -40,6 +40,28 @@
               <td><a href="{{ route('app.supplier.edit', $supplier->id) }}">Edit</a></td>
 
             </tr>
+            <tr>
+              <td colspan="6">
+                <p> Product List</p>
+                <table border="1" style="margin: 20px">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  @foreach($supplier->products as $key => $product)
+                    <tr>
+                      <td>{{$product->id}}</td>
+                      <td>{{$product->name}}</td>
+                    </tr>
+                  @endforeach
+                  </tbody>
+
+                </table>
+              </td>
+            </tr>
           @endforeach
           </tbody>
         </table>

@@ -1,13 +1,22 @@
 @if(isset($product->id))
   <form method="post" action="{{route('product.update', ['product' => $product->id])}}">
-  @csrf
-  @method('PUT')
-@else
-  <form method="post" action="{{route('product.store')}}">
     @csrf
-    @endif
+    @method('PUT')
+@else
+      <form method="post" action="{{route('product.store')}}">
+      @csrf
+@endif
 
-    <input type="text" name="name" value="{{ $product->name ?? old('name')}}" placeholder="Name" class="borda-preta">
+    <select name="supplier_id">
+      <option>-- Selecione um Supplier--</option>
+      @foreach($suppliers as $supplier)
+        <option
+          value="{{$supplier->id}}"{{$product->supplier_id ?? old('supplier_id') === $supplier->id ? 'selected' : '' }}>{{$supplier->name}}</option>
+      @endforeach
+    </select>
+    {{ $errors->has('supplier_id') ? $errors->first('supplier_id'): ''}}
+    <input type="text" name="name" value="{{ $product->name ?? old('name')}}" placeholder="Name"
+           class="borda-preta">
     {{ $errors->has('name') ? $errors->first('name'): ''}}
     <input type="text" name="description" value="{{$product->description ?? old('description')}}"
            placeholder="Description"
