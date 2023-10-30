@@ -31,6 +31,7 @@
             <tr>
               <td>{{$order->id}}</td>
               <td>{{$order->client_id}}</td>
+              <td><a href="{{ route('order-product.create', ['order' => $order->id]) }}">Add Prodcuts</td>
 
               <td><a href={{route('order.show', ['order' => $order->id])}}>View</a></td>
               <td><a href={{route('order.edit', ['order' => $order->id])}}>Edit</a></td>

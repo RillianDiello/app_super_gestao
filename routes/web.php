@@ -57,7 +57,9 @@ Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(functi
     Route::resource('/product-details', ProductDetailController::class);
     Route::resource('client', ClientController::class);
     Route::resource('order', OrderController::class);
-    Route::resource('order-product', OrderProductController::class);
+//    Route::resource('order-product', OrderProductController::class);
+    Route::get('order-product/create/{order}', [OrderProductController::class, 'create'])->name('order-product.create');
+    Route::post('order-product/create/{order}', [OrderProductController::class, 'store'])->name('order-product.store');
 });
 
 Route::get('/test/{p1}/{p2}', [TestController::class, 'teste'])->name('site.route1');

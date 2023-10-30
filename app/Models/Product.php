@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Product extends Model
 {
+    protected $table = 'products';
     protected $fillable = ['name', 'description', 'weight', 'unit_id', 'supplier_id'];
     use HasFactory;
 
