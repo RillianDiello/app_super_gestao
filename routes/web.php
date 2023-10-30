@@ -6,6 +6,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\SupplierController;
@@ -39,7 +41,6 @@ Route::get('/about', [AboutController::class, 'about'])->name('site.about');
 Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(function () {
     Route::get('/out', [LoginController::class, 'out'])->name('app.out');
     Route::get('/home', [HomeController::class, 'index'])->name('app.home');
-    Route::get('/client', [ClientController::class, 'index'])->name('app.client');
 
     Route::get('/supplier', [SupplierController::class, 'index'])->name('app.supplier');
     Route::post('/supplier/list', [SupplierController::class, 'list'])->name('app.supplier.list');
@@ -54,6 +55,9 @@ Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(functi
 
     // Product Details resource
     Route::resource('/product-details', ProductDetailController::class);
+    Route::resource('client', ClientController::class);
+    Route::resource('order', OrderController::class);
+    Route::resource('order-product', OrderProductController::class);
 });
 
 Route::get('/test/{p1}/{p2}', [TestController::class, 'teste'])->name('site.route1');
