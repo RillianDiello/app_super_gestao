@@ -29,7 +29,8 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-
+            <th>Creted at</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -37,6 +38,20 @@
             <tr>
               <td>{{$product->id}}</td>
               <td>{{$product->name}}</td>
+              <td>{{$product->pivot->created_at->format('d/m/Y')}}</td>
+              <td>
+                <form id="form_{{$order->id}}_{{$product->id}}" method="post"
+                      action="{{route('order-product.destroy', [
+                            'order' => $order->id, '$product' => $product->id
+                            ])}}">
+                  @method('DELETE')
+                  @csrf
+                <a href="#" onclick="document.getElementById('form_{{$order->id}}_{{$product->id}}').submit()">
+                  Remove
+                </a>
+                </form>
+              </td>
+
             </tr>
           @endforeach
           </tbody>
