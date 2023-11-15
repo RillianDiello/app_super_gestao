@@ -41,16 +41,24 @@ class OrderProductController extends Controller
 
         $rules = [
           'product_id' => 'exists:products,id',
+            'amount' => 'required'
           ];
         $feedback = [
           'product_id.exists' => 'The Product does not exist',
+            'required' => 'The input :attribute needs to be value'
         ];
         $request->validate($rules, $feedback);
 
-        $orderProduct = new OrderProduct();
+       /* $orderProduct = new OrderProduct();
         $orderProduct->product_id = $request->get('product_id');
         $orderProduct->order_id = $order->id;
-        $orderProduct->save();
+
+        $orderProduct->save();*/
+
+        $order->products()->attach($request->get('product_id'),
+          [
+            'amount' => $request->get('amount')
+          ]);
         return redirect()->route('order-product.create', ['order' => $order->id]);
     }
 
@@ -89,13 +97,22 @@ class OrderProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Order $order
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(OrderProduct $orderProduct, $order_id)
     {
-        //
+        /*
+        print_r($order->getAttributes());
+        echo '<br>';
+        print_r($product->getAttributes());*/
+
+//        echo $order->id . ' _ ' . $product->id;
+
+//        $order->products()->detach($product->id);
+
+        $orderProduct->delete();
+        return redirect()->route('order-product.create', ['order' => $order_id]);
     }
 }

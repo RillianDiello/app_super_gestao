@@ -50,7 +50,16 @@
                   <a href="#" onclick="document.getElementById('form_{{ $product->id }}').submit()">Excluir</a>
                 </form>
               </td>
-
+            </tr>
+            <tr>
+              <td colspan="12">
+                <p>Orders</p>
+                @foreach( $product->orders as $order)
+                  <a href="{{route('order-product.create', ['order' => $order->id])}}">
+                    Orders: {{$order->id}},
+                  </a>
+                @endforeach
+              </td>
             </tr>
           @endforeach
           </tbody>

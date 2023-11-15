@@ -10,5 +10,8 @@
   </select>
   {{ $errors->has('product_id') ? $errors->first('product_id'): ''}}
 
+  <input type="number" name="amount" value="{{ old('amount') ? old('amount'):''}}" placeholder="Amount"
+         class="borda-preta">
+  {{ $errors->has('amount') ? $errors->first('amount'): ''}}
   <button type="submit" class="borda-preta">Save an Order</button>
 </form>

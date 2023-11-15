@@ -60,6 +60,8 @@ Route::middleware('autenticacao:default,visitant')->prefix('/app')->group(functi
 //    Route::resource('order-product', OrderProductController::class);
     Route::get('order-product/create/{order}', [OrderProductController::class, 'create'])->name('order-product.create');
     Route::post('order-product/create/{order}', [OrderProductController::class, 'store'])->name('order-product.store');
+//    Route::delete('order-product/destroy/{order}/{product}', [OrderProductController::class, 'destroy'])->name('order-product.destroy');
+    Route::delete('order-product/destroy/{orderProduct}/{order_id}', [OrderProductController::class, 'destroy'])->name('order-product.destroy');
 });
 
 Route::get('/test/{p1}/{p2}', [TestController::class, 'teste'])->name('site.route1');
