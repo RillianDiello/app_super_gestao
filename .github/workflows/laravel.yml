@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: TEST
     steps:
-    - name: Hello world action
-      with: # Set the secret as an input
-        super_secret: ${{ secrets.RILLIAN_SECRETE }}
-      env: # Or as an environment variable
-        no_super_secret: ${{ secrets.RILLIAN_SECRETE }}
-      run: 'echo ${{RILLLIAN_NO_SECRETE}}'
+      - name: Hello world action
+        with: # Set the secret as an input
+          super_secret: ${{ secrets.RILLIAN_SECRETE }}
+        env: # Or as an environment variable
+          no_super_secret: ${{ secrets.RILLIAN_SECRETE }}
+        run: 'echo ${{RILLLIAN_NO_SECRETE}}'
 
     # steps:
     #- uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
